@@ -1,0 +1,47 @@
+.shapes-container {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+    z-index: 1;
+    
+  }
+  
+  .rectangle,
+  .hexagon,
+  .pentagon {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background-color: #ff6347; 
+    opacity: 0.7;
+  }
+  
+  .hexagon {
+    width: 60px;
+    height: 60px;
+    background-color: #00bcd4;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  }
+  
+  .pentagon {
+    width: 60px;
+    height: 60px;
+    background-color: #9c27b0;
+    clip-path: polygon(50% 0%, 100% 38%, 81% 100%, 19% 100%, 0% 38%);
+  }
+  
+  @keyframes floatTag {
+    0% {
+      transform: translateY(0) rotate(0deg);
+      opacity: 1;
+    }
+    50% {
+      transform: translateY(-100px) rotate(180deg);
+      opacity: 0.5;
+    }
+    100% {
+      transform: translateY(0) rotate(360deg);
+      opacity: 0;
+    }
+  }
+  
