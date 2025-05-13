@@ -9,7 +9,7 @@ const Logout = ({ setRole }) => {
   useEffect(() => {
     const logoutUser = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/logout", { withCredentials: true });
+        const res = await axios.get("https://mern-education-vj03.onrender.com/api/logout", { withCredentials: true });
         if (res.data.logout) {
           setRole(""); 
           navigate("/"); 

@@ -30,7 +30,7 @@ const Loginpage = ({ setRole }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:5000/api/login", { email, password, role });
+      const res = await axios.post("https://mern-education-vj03.onrender.com/api/login", { email, password, role });
       
       if (res.data.login) {
         toast.success("Login successful", { position: "top-right" });

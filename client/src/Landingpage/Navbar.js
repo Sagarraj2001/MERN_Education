@@ -16,7 +16,7 @@ const Navbar = ({ role }) => {
   useEffect(() => {
     const fetchUsername = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/getUsername", {
+        const response = await axios.get("https://mern-education-vj03.onrender.com/api/getUsername", {
           withCredentials: true,
         });
         setUsername(response.data.username);

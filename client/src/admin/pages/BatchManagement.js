@@ -11,7 +11,7 @@ import {
   AccessTime as TimeIcon, Group as GroupIcon
 } from '@mui/icons-material';
 
-const API_URL = 'http://localhost:5000/api/batches';
+const API_URL = 'https://mern-education-vj03.onrender.com/api/batches';
 
 
 const BatchManagement = () => {
@@ -35,7 +35,7 @@ const BatchManagement = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/verify", { withCredentials: true })
+      .get("https://mern-education-vj03.onrender.com/api/verify", { withCredentials: true })
       .then(res => {
         if (!res.data.login) {
           navigate("/login");

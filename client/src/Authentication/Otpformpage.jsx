@@ -35,7 +35,7 @@ const OtpVerificationPage = () => {
     setLoading(true);
 
     try {
-      await axios.post("http://localhost:5000/api/verifyOtp", {
+      await axios.post("https://mern-education-vj03.onrender.com/api/verifyOtp", {
         email,
         otp,
         context: purpose,
@@ -60,7 +60,7 @@ const OtpVerificationPage = () => {
 
   const handleResendOtp = async () => {
     try {
-      await axios.post("http://localhost:5000/api/resendOtp", {
+      await axios.post("https://mern-education-vj03.onrender.com/api/resendOtp", {
         email,
         context: purpose,
       });

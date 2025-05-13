@@ -40,7 +40,7 @@ const Dashboard = () => {
   const [enrollmentData, setEnrollmentData] = useState([]); 
    useEffect(() => {
       axios
-        .get("http://localhost:5000/api/verify", { withCredentials: true })
+        .get("https://mern-education-vj03.onrender.com/api/verify", { withCredentials: true })
         .then(res => {
           if (!res.data.login) {
             navigate("/login");
@@ -55,7 +55,7 @@ const Dashboard = () => {
   // Fetch data from backend
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/dashboard');
+      const response = await axios.get('https://mern-education-vj03.onrender.com/api/dashboard');
       setDashboardData(response.data);
 
       // Example: Generate chart data dynamically

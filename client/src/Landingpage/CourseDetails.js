@@ -51,7 +51,7 @@ const CourseDetails = ({ role }) => {
   // Auth verification
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/verify", { withCredentials: true })
+      .get("https://mern-education-vj03.onrender.com/api/verify", { withCredentials: true })
       .then(res => {
         if (!res.data.login) {
           navigate("/login");
@@ -66,11 +66,11 @@ const CourseDetails = ({ role }) => {
   // Fetch course info and check enrollment
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/course/${title}`)
+      .get(`https://mern-education-vj03.onrender.com/api/course/${title}`)
       .then(res => {
         setCourseInfo(res.data);
 
-        axios.get(`http://localhost:5000/api/enrollment-status/${res.data._id}`, {
+        axios.get(`https://mern-education-vj03.onrender.com/api/enrollment-status/${res.data._id}`, {
           withCredentials: true
         })
           .then(response => {
@@ -86,7 +86,7 @@ const CourseDetails = ({ role }) => {
 
   //   setLoadingEnroll(true);
 
-  //   axios.post("http://localhost:5000/api/enroll", {
+  //   axios.post("https://mern-education-vj03.onrender.com/api/enroll", {
   //     courseId: courseInfo._id
   //   }, { withCredentials: true })
   //     .then(res => {
@@ -108,7 +108,7 @@ const CourseDetails = ({ role }) => {
   
     setLoadingEnroll(true);
   
-    axios.post("http://localhost:5000/api/enroll", {
+    axios.post("https://mern-education-vj03.onrender.com/api/enroll", {
       courseId: courseInfo._id
     }, { withCredentials: true })
       .then(res => {
@@ -138,7 +138,7 @@ const CourseDetails = ({ role }) => {
           <div className="row align-items-center">
             <div className="col-lg-5 text-center">
               <img
-                src={`http://localhost:5000/uploads/course_images/${courseInfo.image}`}
+                src={`https://mern-education-vj03.onrender.com/uploads/course_images/${courseInfo.image}`}
                 alt="Course Illustration"
                 className="img-fluid w-100"
               />

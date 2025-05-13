@@ -42,7 +42,7 @@ const ResetPasswordpage = () => {
 
     try {
       setLoading(true);
-      const response = await axios.post("http://localhost:5000/api/resetPassword", {
+      const response = await axios.post("https://mern-education-vj03.onrender.com/api/resetPassword", {
         email,
         newPassword: password,       
         confirmPassword: cnfmpasd,

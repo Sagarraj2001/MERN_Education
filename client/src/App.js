@@ -27,7 +27,7 @@ const App = () => {
   const [role, setRole] = useState('');
   axios.defaults.withCredentials = true;
   useEffect(() => {
-    axios.get("http://localhost:5000/api/verify")
+    axios.get("https://mern-education-vj03.onrender.com/api/verify")
       .then(res => {
         if (res.data.login) {
           setRole(res.data.role);

@@ -17,7 +17,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/enrollCourse", {
+        const res = await axios.get("https://mern-education-vj03.onrender.com/api/enrollCourse", {
           withCredentials: true,
         });
 

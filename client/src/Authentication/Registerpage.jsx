@@ -33,7 +33,7 @@ const Registerpage = () => {
     }
   
     try {
-      await axios.post("http://localhost:5000/api/register", {
+      await axios.post("https://mern-education-vj03.onrender.com/api/register", {
         username,
         email,
         number,

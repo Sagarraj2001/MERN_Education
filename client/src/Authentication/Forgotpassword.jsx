@@ -22,7 +22,7 @@ const ForgotPasswordPage = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:5000/api/forgotPassword", { email });
+      const response = await axios.post("https://mern-education-vj03.onrender.com/api/forgotPassword", { email });
 
       // Store OTP context and email in localStorage for OTP page to use
       localStorage.setItem("resetEmail", email);

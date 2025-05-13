@@ -12,7 +12,7 @@ const HomeCourse = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/showCourse");
+        const res = await axios.get("https://mern-education-vj03.onrender.com/api/showCourse");
         setCourses(res.data.slice(0, 4)); 
         setLoading(false);
       } catch (err) {
