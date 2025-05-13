@@ -15,7 +15,7 @@ const path = require('path');
 const app=express();
 
 app.use(cors({
-    origin:["http://localhost:3000"],
+    origin:"https://mern-education.vercel.app",
     methods:["PUT","POST","GET","DELETE"],
     credentials:true
 }));
@@ -32,6 +32,12 @@ dotenv.config();
 
 const port=process.env.PORT;
 
+
+
+
+
+
+
 app.use("/api",AuthRoute);
 app.use("/api",AdminCourse);
 app.use("/api",DashboardRoute);
@@ -39,6 +45,9 @@ app.use("/api",UserRoutes);
 app.use("/api",BatchRoute);
 app.use("/api",UserRoute);
 app.use("/api",CourseRoute);
+
+
+
 
 app.listen(port,()=>{
     console.log(`app is running at port ${port}`);
