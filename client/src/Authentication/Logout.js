@@ -4,6 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const Logout = ({ setRole }) => {
+  axios.defaults.withCredentials = true;
   const navigate = useNavigate();
 
   useEffect(() => {

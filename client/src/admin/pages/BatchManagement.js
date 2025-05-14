@@ -15,6 +15,7 @@ const API_URL = 'https://mern-education-vj03.onrender.com/api/batches';
 
 
 const BatchManagement = () => {
+  axios.defaults.withCredentials = true;
   const navigate = useNavigate();
   const [batches, setBatches] = useState([]);
   const [open, setOpen] = useState(false);

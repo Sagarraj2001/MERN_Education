@@ -4,6 +4,7 @@ import { Button } from "react-bootstrap";
 import axios from "axios";
 
 const Dashboard = () => {
+  axios.defaults.withCredentials = true;
   const navigate = useNavigate();
   const [username, setUsername] = useState("Guest");
   const [enrolledCourses, setEnrolledCourses] = useState([]);

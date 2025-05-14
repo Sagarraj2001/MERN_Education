@@ -6,6 +6,7 @@ import Footer from "./Footer";
 import axios from "axios";
 
 const Course = () => {
+  axios.defaults.withCredentials = true;
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");

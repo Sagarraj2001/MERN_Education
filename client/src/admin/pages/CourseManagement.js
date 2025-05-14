@@ -21,6 +21,7 @@ import {
 const API_URL = "https://mern-education-vj03.onrender.com"; // Base API URL
 
 const CourseManagement = () => {
+    axios.defaults.withCredentials = true;
     const navigate=useNavigate();
     const [courses, setCourses] = useState([]);
     const [open, setOpen] = useState(false); // For Course Add/Edit Dialog

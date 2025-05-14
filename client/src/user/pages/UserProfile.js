@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { FaUserTie, FaEnvelope,  FaUser ,FaPhoneAlt,} from "react-icons/fa";
 
 const UserProfile = () => {
+  axios.defaults.withCredentials = true;
   const navigate = useNavigate();
   const [profile, setProfile] = useState({
     username: "",

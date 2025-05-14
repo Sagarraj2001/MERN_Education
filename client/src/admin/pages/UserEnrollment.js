@@ -10,6 +10,7 @@ import {
 } from '@mui/icons-material';
 
 const UserManagement = () => {
+  axios.defaults.withCredentials = true;
   const [users, setUsers] = useState([]);
   const [open, setOpen] = useState(false);
   const [editingUser, setEditingUser] = useState(null);

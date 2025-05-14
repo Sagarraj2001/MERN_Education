@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 const ResetPasswordpage = () => {
+  axios.defaults.withCredentials = true;
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [cnfmpasd, setCnfmpasd] = useState("");

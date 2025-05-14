@@ -8,6 +8,7 @@ const HomeCourse = () => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  axios.defaults.withCredentials = true;
 
   useEffect(() => {
     const fetchCourses = async () => {

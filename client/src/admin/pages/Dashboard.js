@@ -29,6 +29,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
+  axios.defaults.withCredentials = true;
   const navigate =useNavigate();
   const [dashboardData, setDashboardData] = useState({
     totalEnrollment: 0,

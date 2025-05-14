@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const OtpVerificationPage = () => {
+  axios.defaults.withCredentials = true;
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");

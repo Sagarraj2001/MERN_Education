@@ -7,6 +7,7 @@ import axios from "axios";
 import "./Navbar.css";
 
 const Navbar = ({ role }) => {
+  axios.defaults.withCredentials = true;
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [username, setUsername] = useState("");

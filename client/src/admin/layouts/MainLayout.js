@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 const MainLayout = ({ children }) => {
   const navigate=useNavigate();
+  axios.defaults.withCredentials = true;
   useEffect(() => {
     axios
       .get("https://mern-education-vj03.onrender.com/api/verify", { withCredentials: true })

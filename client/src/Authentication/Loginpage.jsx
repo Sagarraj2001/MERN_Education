@@ -18,6 +18,7 @@ import ParticlesBackground from "./Particlebackground";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const Loginpage = ({ setRole }) => {
+  axios.defaults.withCredentials = true;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
