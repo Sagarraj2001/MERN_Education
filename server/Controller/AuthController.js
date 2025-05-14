@@ -210,6 +210,37 @@ exports.resendOtp = async (req, res) => {
 };
 
 // ======================== LOGIN ========================
+// exports.login = async (req, res) => {
+//   try {
+//     const { email, password, role } = req.body;
+
+//     if (role === "admin") {
+//       const admin = await Admin.findOne({ email });
+//       if (!admin) return res.status(401).json({ message: "Admin not registered" });
+
+//       const validPassword = await bcrypt.compare(password, admin.password);
+//       if (!validPassword) return res.status(401).json({ message: "Wrong password" });
+
+//       const token = jwt.sign({ email: admin.email, role: "admin" }, process.env.Admin_Key);
+//       res.cookie("token", token, { httpOnly: true, secure: true });
+//       return res.status(200).json({ login: true, role: "admin" });
+//     } else if (role === "user") {
+//       const user = await AuthModel.findOne({ email });
+//       if (!user) return res.status(401).json({ message: "User not registered" });
+
+//       const validPassword = await bcrypt.compare(password, user.password);
+//       if (!validPassword) return res.status(401).json({ message: "Wrong password" });
+
+//       const token = jwt.sign({ email: user.email, role: "user" }, process.env.User_Key);
+//       res.cookie("token", token, { httpOnly: true, secure: true });
+//       return res.status(200).json({ login: true, role: "user" });
+//     } else {
+//       return res.status(400).json({ message: "Invalid role specified" });
+//     }
+//   } catch (err) {
+//     res.status(500).json({ message: "Login error", error: err.message });
+//   }
+// };
 exports.login = async (req, res) => {
   try {
     const { email, password, role } = req.body;
@@ -221,20 +252,42 @@ exports.login = async (req, res) => {
       const validPassword = await bcrypt.compare(password, admin.password);
       if (!validPassword) return res.status(401).json({ message: "Wrong password" });
 
-      const token = jwt.sign({ email: admin.email, role: "admin" }, process.env.Admin_Key);
-      res.cookie("token", token, { httpOnly: true, secure: true });
+      const token = jwt.sign({ email: admin.email, role: "admin" }, process.env.Admin_Key, {
+        expiresIn: "7d"
+      });
+
+      res.cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+        maxAge: 7 * 24 * 60 * 60 * 1000 
+      });
+
       return res.status(200).json({ login: true, role: "admin" });
-    } else if (role === "user") {
+    }
+
+    else if (role === "user") {
       const user = await AuthModel.findOne({ email });
       if (!user) return res.status(401).json({ message: "User not registered" });
 
       const validPassword = await bcrypt.compare(password, user.password);
       if (!validPassword) return res.status(401).json({ message: "Wrong password" });
 
-      const token = jwt.sign({ email: user.email, role: "user" }, process.env.User_Key);
-      res.cookie("token", token, { httpOnly: true, secure: true });
+      const token = jwt.sign({ email: user.email, role: "user" }, process.env.User_Key, {
+        expiresIn: "7d"
+      });
+
+      res.cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+        maxAge: 7 * 24 * 60 * 60 * 1000 
+      });
+
       return res.status(200).json({ login: true, role: "user" });
-    } else {
+    }
+
+    else {
       return res.status(400).json({ message: "Invalid role specified" });
     }
   } catch (err) {
