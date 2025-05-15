@@ -67,7 +67,7 @@ const CourseManagement = () => {
         setLoading(true);
         setError(null);
         try {
-            const res = await axios.get(`${API_URL}/api/showCourse`);
+            const res = await axios.get(`${API_URL}/api/showCourse`,{withCredentials: true});
             // Ensure chapters is always an array, even if backend omits it for courses with no chapters
             const sanitizedCourses = res.data.map(course => ({
                 ...course,
@@ -131,7 +131,7 @@ const CourseManagement = () => {
                  // PUT request to update endpoint
                 const res = await axios.put(`${API_URL}/api/updateCourse/${editingCourse._id}`, submissionData, {
                      headers: { 'Content-Type': 'multipart/form-data' }
-                });
+                },{withCredentials: true});
                 updatedCourseData = res.data; // Backend returns the updated course object
                 // Update the course in the state
                 setCourses(courses.map(c => (c._id === editingCourse._id ? updatedCourseData : c)));
@@ -139,7 +139,7 @@ const CourseManagement = () => {
                 // POST request to add endpoint
                 const res = await axios.post(`${API_URL}/api/addCourse`, submissionData, {
                     headers: { 'Content-Type': 'multipart/form-data' }
-                });
+                },{withCredentials: true});
                  updatedCourseData = res.data; // Backend returns the new course object
                 // Add the new course to the state
                 setCourses([...courses, updatedCourseData]);
@@ -156,7 +156,7 @@ const CourseManagement = () => {
         if (window.confirm('Are you sure you want to delete this course and ALL its chapters?')) {
             setError(null);
             try {
-                await axios.delete(`${API_URL}/api/deleteCourse/${courseId}`);
+                await axios.delete(`${API_URL}/api/deleteCourse/${courseId}`,{withCredentials: true});
                 setCourses(courses.filter((course) => course._id !== courseId));
             } catch (err) {
                 console.error("Failed to delete course", err.response?.data || err.message);

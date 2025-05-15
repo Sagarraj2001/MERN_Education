@@ -56,7 +56,7 @@ const Dashboard = () => {
   // Fetch data from backend
   const fetchData = async () => {
     try {
-      const response = await axios.get('https://mern-education-vj03.onrender.com/api/dashboard');
+      const response = await axios.get('https://mern-education-vj03.onrender.com/api/dashboard',{withCredentials: true});
       setDashboardData(response.data);
 
       // Example: Generate chart data dynamically

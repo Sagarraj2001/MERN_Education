@@ -40,7 +40,7 @@ const OtpVerificationPage = () => {
         email,
         otp,
         context: purpose,
-      });
+      },{ withCredentials: true});
 
       toast.success("OTP Verified Successfully!");
 
@@ -64,7 +64,7 @@ const OtpVerificationPage = () => {
       await axios.post("https://mern-education-vj03.onrender.com/api/resendOtp", {
         email,
         context: purpose,
-      });
+      },{ withCredentials: true});
       toast.info("A new OTP has been sent to your email.");
     } catch (err) {
       toast.error(err.response?.data?.message || "Error resending OTP.");

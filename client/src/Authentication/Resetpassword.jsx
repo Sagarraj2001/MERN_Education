@@ -47,7 +47,7 @@ const ResetPasswordpage = () => {
         email,
         newPassword: password,       
         confirmPassword: cnfmpasd,
-      });
+      },{ withCredentials: true});
 
       toast.success(response.data.message || "Password reset successfully!");
 

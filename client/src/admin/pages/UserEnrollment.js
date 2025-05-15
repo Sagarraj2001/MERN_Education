@@ -21,7 +21,7 @@ const UserManagement = () => {
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get('https://mern-education-vj03.onrender.com/api/users');
+      const res = await axios.get('https://mern-education-vj03.onrender.com/api/users',{withCredentials: true});
       setUsers(res.data);
     } catch (err) {
       console.error('Error fetching users:', err);
@@ -46,9 +46,9 @@ const UserManagement = () => {
   const handleSubmit = async () => {
     try {
       if (editingUser) {
-        await axios.put(`https://mern-education-vj03.onrender.com/api/users/${editingUser.email}`, formData);
+        await axios.put(`https://mern-education-vj03.onrender.com/api/users/${editingUser.email}`, formData,{withCredentials: true});
       } else {
-        await axios.post('https://mern-education-vj03.onrender.com/api/register', formData); // Change this route if needed
+        await axios.post('https://mern-education-vj03.onrender.com/api/register', formData,{withCredentials: true}); // Change this route if needed
       }
       fetchUsers();
       handleClose();
@@ -59,7 +59,7 @@ const UserManagement = () => {
 
   const handleDelete = async (email) => {
     try {
-      await axios.delete(`https://mern-education-vj03.onrender.com/api/users/${email}`);
+      await axios.delete(`https://mern-education-vj03.onrender.com/api/users/${email}`,{withCredentials: true});
       fetchUsers();
     } catch (err) {
       console.error('Error deleting user:', err);

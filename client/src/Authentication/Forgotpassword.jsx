@@ -22,12 +22,17 @@ const ForgotPasswordPage = () => {
     }
 
     try {
-      const response = await axios.post("https://mern-education-vj03.onrender.com/api/forgotPassword", { email });
+      const response = await axios.post(
+        "https://mern-education-vj03.onrender.com/api/forgotPassword",
+        { email },
+        { withCredentials: true } // ✅ Important for cross-origin cookies
+      );
+
 
       // Store OTP context and email in localStorage for OTP page to use
       localStorage.setItem("resetEmail", email);
       localStorage.setItem("otpPurpose", "forgot");
-      
+
 
       toast.success(response.data.message || "OTP sent to your email!");
       navigate("/otp");

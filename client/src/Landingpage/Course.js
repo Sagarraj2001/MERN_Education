@@ -14,7 +14,7 @@ const Course = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const res = await axios.get("https://mern-education-vj03.onrender.com/api/showCourse"); 
+        const res = await axios.get("https://mern-education-vj03.onrender.com/api/showCourse",{ withCredentials: true}); 
         setCourses(res.data);
         setLoading(false);
       } catch (err) {

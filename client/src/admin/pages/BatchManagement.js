@@ -54,7 +54,7 @@ const BatchManagement = () => {
 
   const fetchBatches = async () => {
     try {
-      const response = await axios.get(API_URL);
+      const response = await axios.get(API_URL,{withCredentials: true});
       setBatches(response.data);
     } catch (error) {
       console.error('Error fetching batches:', error);
@@ -97,12 +97,12 @@ const BatchManagement = () => {
       let updatedBatches;
 
       if (editingBatch) {
-        const response = await axios.put(`${API_URL}/${editingBatch._id}`, batchData);
+        const response = await axios.put(`${API_URL}/${editingBatch._id}`, batchData,{withCredentials: true});
         updatedBatches = batches.map(batch =>
           batch._id === editingBatch._id ? response.data : batch
         );
       } else {
-        const response = await axios.post(API_URL, batchData);
+        const response = await axios.post(API_URL, batchData,{withCredentials: true});
         updatedBatches = [...batches, response.data];
       }
 
@@ -115,7 +115,7 @@ const BatchManagement = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`${API_URL}/${id}`);
+      await axios.delete(`${API_URL}/${id}`,{withCredentials: true});
       setBatches(batches.filter(batch => batch._id !== id));
     } catch (error) {
       console.error('Error deleting batch:', error);

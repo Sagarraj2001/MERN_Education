@@ -66,7 +66,7 @@ const CourseDetails = ({ role }) => {
   // Fetch course info and check enrollment
   useEffect(() => {
     axios
-      .get(`https://mern-education-vj03.onrender.com/api/course/${title}`)
+      .get(`https://mern-education-vj03.onrender.com/api/course/${title}`,{ withCredentials: true})
       .then(res => {
         setCourseInfo(res.data);
 

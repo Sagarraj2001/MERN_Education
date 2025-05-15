@@ -13,7 +13,7 @@ const HomeCourse = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const res = await axios.get("https://mern-education-vj03.onrender.com/api/showCourse");
+        const res = await axios.get("https://mern-education-vj03.onrender.com/api/showCourse",{ withCredentials: true});
         setCourses(res.data.slice(0, 4)); 
         setLoading(false);
       } catch (err) {

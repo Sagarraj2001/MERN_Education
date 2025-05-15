@@ -12,7 +12,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Registerpage = () => {
-  axios.defaults.withCredentials = true;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
@@ -39,7 +38,7 @@ const Registerpage = () => {
         email,
         number,
         password,
-      });
+      },{ withCredentials: true});
   
       localStorage.setItem("pendingUser", JSON.stringify({ email, username, number }));
       localStorage.setItem("otpPurpose", "signup"); // ✅ KEY FIX
