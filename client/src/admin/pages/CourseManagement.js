@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 import {
     Box, Button, // Removed unused Paper, Table components
@@ -22,7 +22,7 @@ const API_URL = "https://mern-education-vj03.onrender.com"; // Base API URL
 
 const CourseManagement = () => {
     axios.defaults.withCredentials = true;
-    const navigate=useNavigate();
+    const navigate = useNavigate();
     const [courses, setCourses] = useState([]);
     const [open, setOpen] = useState(false); // For Course Add/Edit Dialog
     const [editingCourse, setEditingCourse] = useState(null);
@@ -46,18 +46,18 @@ const CourseManagement = () => {
 
     useEffect(() => {
         axios
-          .get(`${API_URL}/api/verify`, { withCredentials: true })
-          .then(res => {
-            if (!res.data.login) {
-              navigate("/login");
-            }
-          })
-          .catch(err => {
-            console.error("Authentication error:", err);
-            navigate("/login");
-          });
-      }, [navigate]);
-    
+            .get(`${API_URL}/api/verify`, { withCredentials: true })
+            .then(res => {
+                if (!res.data.login) {
+                    navigate("/login");
+                }
+            })
+            .catch(err => {
+                console.error("Authentication error:", err);
+                navigate("/login");
+            });
+    }, [navigate]);
+
 
     useEffect(() => {
         fetchCourses();
@@ -67,7 +67,7 @@ const CourseManagement = () => {
         setLoading(true);
         setError(null);
         try {
-            const res = await axios.get(`${API_URL}/api/showCourse`,{withCredentials: true});
+            const res = await axios.get(`${API_URL}/api/showCourse`, { withCredentials: true });
             // Ensure chapters is always an array, even if backend omits it for courses with no chapters
             const sanitizedCourses = res.data.map(course => ({
                 ...course,
@@ -88,9 +88,9 @@ const CourseManagement = () => {
             setEditingCourse(course);
             // `course.image` is now the full URL from backend
             setFormData({
-                 ...course, // Spread existing data (_id, title, description, duration, image URL)
-                 chapters: course.chapters || [], // Ensure chapters array exists
-                 imageFile: null // Reset file input on edit
+                ...course, // Spread existing data (_id, title, description, duration, image URL)
+                chapters: course.chapters || [], // Ensure chapters array exists
+                imageFile: null // Reset file input on edit
             });
         } else {
             setEditingCourse(null);
@@ -110,7 +110,7 @@ const CourseManagement = () => {
         if (file) {
             const imageUrl = URL.createObjectURL(file);
             setFormData(prev => ({ ...prev, image: imageUrl, imageFile: file }));
-             // TODO: Consider revoking previous blob URL if formData.image was a blob URL
+            // TODO: Consider revoking previous blob URL if formData.image was a blob URL
         }
     };
 
@@ -128,19 +128,23 @@ const CourseManagement = () => {
         try {
             let updatedCourseData;
             if (editingCourse) {
-                 // PUT request to update endpoint
+                // PUT request to update endpoint
                 const res = await axios.put(`${API_URL}/api/updateCourse/${editingCourse._id}`, submissionData, {
-                     headers: { 'Content-Type': 'multipart/form-data' }
-                },{withCredentials: true});
+                    headers: { 'Content-Type': 'multipart/form-data' },
+                    withCredentials: true
+                });
+
                 updatedCourseData = res.data; // Backend returns the updated course object
                 // Update the course in the state
                 setCourses(courses.map(c => (c._id === editingCourse._id ? updatedCourseData : c)));
             } else {
                 // POST request to add endpoint
                 const res = await axios.post(`${API_URL}/api/addCourse`, submissionData, {
-                    headers: { 'Content-Type': 'multipart/form-data' }
-                },{withCredentials: true});
-                 updatedCourseData = res.data; // Backend returns the new course object
+                    headers: { 'Content-Type': 'multipart/form-data' },
+                    withCredentials: true       // Move this inside the same config object
+                });
+
+                updatedCourseData = res.data; // Backend returns the new course object
                 // Add the new course to the state
                 setCourses([...courses, updatedCourseData]);
             }
@@ -156,7 +160,7 @@ const CourseManagement = () => {
         if (window.confirm('Are you sure you want to delete this course and ALL its chapters?')) {
             setError(null);
             try {
-                await axios.delete(`${API_URL}/api/deleteCourse/${courseId}`,{withCredentials: true});
+                await axios.delete(`${API_URL}/api/deleteCourse/${courseId}`, { withCredentials: true });
                 setCourses(courses.filter((course) => course._id !== courseId));
             } catch (err) {
                 console.error("Failed to delete course", err.response?.data || err.message);
@@ -235,15 +239,15 @@ const CourseManagement = () => {
         return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
     };
 
-     // Format date from backend (assuming ISO string or Date object)
-     const formatDate = (dateString) => {
-         if (!dateString) return 'N/A';
-         try {
+    // Format date from backend (assuming ISO string or Date object)
+    const formatDate = (dateString) => {
+        if (!dateString) return 'N/A';
+        try {
             return new Date(dateString).toLocaleDateString();
-         } catch (e) {
-             return 'Invalid Date';
-         }
-     };
+        } catch (e) {
+            return 'Invalid Date';
+        }
+    };
 
     // --- Filtering ---
     const filteredCourses = courses.filter((course) =>
@@ -257,7 +261,7 @@ const CourseManagement = () => {
 
     // Display error message if fetch failed initially
     if (error && courses.length === 0) {
-         return <Typography color="error" sx={{p: 3, textAlign: 'center'}}>{error}</Typography>;
+        return <Typography color="error" sx={{ p: 3, textAlign: 'center' }}>{error}</Typography>;
     }
 
     return (
@@ -275,12 +279,12 @@ const CourseManagement = () => {
             <TextField
                 fullWidth variant="outlined" placeholder="Search courses by title..."
                 value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} sx={{ mb: 3 }}
-                InputProps={{ startAdornment: (<InputAdornment position="start"><SearchIcon /></InputAdornment>)}}
+                InputProps={{ startAdornment: (<InputAdornment position="start"><SearchIcon /></InputAdornment>) }}
             />
 
             {/* Course List */}
             {filteredCourses.length === 0 && !loading && (
-                 <Typography sx={{ textAlign: 'center', mt: 4 }}>No courses found matching your search.</Typography>
+                <Typography sx={{ textAlign: 'center', mt: 4 }}>No courses found matching your search.</Typography>
             )}
 
             {filteredCourses.map((course) => (
@@ -294,7 +298,7 @@ const CourseManagement = () => {
                                     src={course.image || '/placeholder-image.png'} // Use URL from backend
                                     alt={course.title || 'Course'}
                                     style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                                    onError={(e) => { e.target.onerror = null; e.target.src='/placeholder-image.png'; }}
+                                    onError={(e) => { e.target.onerror = null; e.target.src = '/placeholder-image.png'; }}
                                 />
                             </Box>
                             <Box sx={{ flexGrow: 1, minWidth: 0 }}> {/* Added minWidth to prevent text overflow issues */}
@@ -319,7 +323,7 @@ const CourseManagement = () => {
                     <AccordionDetails sx={{ backgroundColor: '#fafafa', pt: 1, pb: 2 }}>
                         {/* Show full description here */}
                         <Typography variant="body1" color="text.secondary" sx={{ mb: 2, display: { xs: 'block', sm: 'none' } }}>
-                             {course.description || 'No description'}
+                            {course.description || 'No description'}
                         </Typography>
 
                         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
@@ -334,81 +338,81 @@ const CourseManagement = () => {
                             <List dense sx={{ p: 0 }}>
                                 {course.chapters.map((chapter) => (
                                     // Chapter Item - Displaying the single PDF info
-                                    <ListItem key={chapter._id} sx={{ borderBottom: '1px solid #eee', pl:1, pr:1, '&:last-child': { borderBottom: 'none' } }}>
+                                    <ListItem key={chapter._id} sx={{ borderBottom: '1px solid #eee', pl: 1, pr: 1, '&:last-child': { borderBottom: 'none' } }}>
                                         <ListItemIcon sx={{ minWidth: 'auto', mr: 1.5 }}>
-                                             {/* Use URL from chapter object */}
-                                             {chapter.url ? <PdfIcon color="error" /> : <DescriptionIcon color="disabled"/>}
+                                            {/* Use URL from chapter object */}
+                                            {chapter.url ? <PdfIcon color="error" /> : <DescriptionIcon color="disabled" />}
                                         </ListItemIcon>
                                         <ListItemText
                                             primary={chapter.title || 'Untitled Chapter'}
                                             secondary={`Uploaded: ${formatDate(chapter.uploadDate)}`} // Use formatted date
                                         />
-                                         {/* Actions only if PDF URL exists */}
-                                         {chapter.url && (
+                                        {/* Actions only if PDF URL exists */}
+                                        {chapter.url && (
                                             <ListItemSecondaryAction>
                                                 <IconButton edge="end" onClick={() => window.open(chapter.url, '_blank')} sx={{ mr: 0.5 }} aria-label="Preview PDF">
-                                                    <PreviewIcon fontSize="small"/>
+                                                    <PreviewIcon fontSize="small" />
                                                 </IconButton>
                                                 <IconButton edge="end" onClick={() => {
-                                                      const link = document.createElement('a');
-                                                      link.href = chapter.url;
-                                                      // Extract filename from URL or use title
-                                                      const filename = chapter.pdf || chapter.title || 'download.pdf';
-                                                      link.download = filename.endsWith('.pdf') ? filename : `${filename}.pdf`;
-                                                      document.body.appendChild(link);
-                                                      link.click();
-                                                      document.body.removeChild(link);
-                                                  }}
-                                                  aria-label="Download PDF">
-                                                    <DownloadIcon fontSize="small"/>
+                                                    const link = document.createElement('a');
+                                                    link.href = chapter.url;
+                                                    // Extract filename from URL or use title
+                                                    const filename = chapter.pdf || chapter.title || 'download.pdf';
+                                                    link.download = filename.endsWith('.pdf') ? filename : `${filename}.pdf`;
+                                                    document.body.appendChild(link);
+                                                    link.click();
+                                                    document.body.removeChild(link);
+                                                }}
+                                                    aria-label="Download PDF">
+                                                    <DownloadIcon fontSize="small" />
                                                 </IconButton>
-                                                 {/* Optional: Add Delete Chapter button here (requires backend endpoint) */}
-                                                 {/* <IconButton edge="end" color="error" aria-label="Delete Chapter"> <DeleteIcon fontSize="small"/> </IconButton> */}
+                                                {/* Optional: Add Delete Chapter button here (requires backend endpoint) */}
+                                                {/* <IconButton edge="end" color="error" aria-label="Delete Chapter"> <DeleteIcon fontSize="small"/> </IconButton> */}
                                             </ListItemSecondaryAction>
-                                         )}
+                                        )}
                                     </ListItem>
                                 ))}
                             </List>
                         ) : (
-                             <Typography variant="body2" color="text.secondary" sx={{ pl: 2, pt: 1 }}>
-                                 No chapters added to this course yet.
-                             </Typography>
+                            <Typography variant="body2" color="text.secondary" sx={{ pl: 2, pt: 1 }}>
+                                No chapters added to this course yet.
+                            </Typography>
                         )}
                     </AccordionDetails>
                 </Accordion>
             ))}
 
             {/* Course Add/Edit Dialog */}
-             <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
-                 <DialogTitle>{editingCourse ? 'Edit Course' : 'Add New Course'}</DialogTitle>
-                 <DialogContent>
-                     {/* Form Fields remain the same */}
-                     <TextField autoFocus margin="dense" label="Course Title" fullWidth variant="outlined" value={formData.title} onChange={(e) => setFormData({ ...formData, title: e.target.value })} required />
-                     <TextField margin="dense" label="Description" fullWidth multiline rows={3} variant="outlined" value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} />
-                     <TextField margin="dense" label="Duration (e.g., 3 months)" fullWidth variant="outlined" value={formData.duration} onChange={(e) => setFormData({ ...formData, duration: e.target.value })} />
+            <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
+                <DialogTitle>{editingCourse ? 'Edit Course' : 'Add New Course'}</DialogTitle>
+                <DialogContent>
+                    {/* Form Fields remain the same */}
+                    <TextField autoFocus margin="dense" label="Course Title" fullWidth variant="outlined" value={formData.title} onChange={(e) => setFormData({ ...formData, title: e.target.value })} required />
+                    <TextField margin="dense" label="Description" fullWidth multiline rows={3} variant="outlined" value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} />
+                    <TextField margin="dense" label="Duration (e.g., 3 months)" fullWidth variant="outlined" value={formData.duration} onChange={(e) => setFormData({ ...formData, duration: e.target.value })} />
                     {/* Image Upload Section */}
-                     <Box sx={{ mt: 2, mb: 1, border: '1px dashed grey', padding: 2, borderRadius: 1 }}>
-                         <Typography variant="subtitle2" sx={{ mb: 1 }}>Course Image</Typography>
-                         <Button variant="outlined" component="label" startIcon={<UploadIcon />} fullWidth>
-                             {/* Display filename if newly selected, else generic text */}
-                             {formData.imageFile ? `Change Image (${formData.imageFile.name})` : (editingCourse && formData.image ? 'Change Image' : 'Upload Image')}
-                             <input type="file" hidden accept="image/*" onChange={handleImageChange} />
-                         </Button>
-                         {/* Image Preview - handles both local blob URL and backend URL */}
-                         {formData.image && (
-                             <Box sx={{ mt: 2, textAlign: 'center' }}>
-                                 <img src={formData.image} alt="Course Preview" style={{ maxWidth: '100%', maxHeight: '150px', borderRadius: '4px', border: '1px solid #eee' }} />
-                             </Box>
-                         )}
-                     </Box>
-                 </DialogContent>
-                 <DialogActions sx={{ p: '16px 24px' }}>
-                     <Button onClick={handleClose} color="secondary">Cancel</Button>
-                     <Button onClick={handleSubmit} variant="contained" disabled={!formData.title}>
-                         {editingCourse ? 'Update Course' : 'Add Course'}
-                     </Button>
-                 </DialogActions>
-             </Dialog>
+                    <Box sx={{ mt: 2, mb: 1, border: '1px dashed grey', padding: 2, borderRadius: 1 }}>
+                        <Typography variant="subtitle2" sx={{ mb: 1 }}>Course Image</Typography>
+                        <Button variant="outlined" component="label" startIcon={<UploadIcon />} fullWidth>
+                            {/* Display filename if newly selected, else generic text */}
+                            {formData.imageFile ? `Change Image (${formData.imageFile.name})` : (editingCourse && formData.image ? 'Change Image' : 'Upload Image')}
+                            <input type="file" hidden accept="image/*" onChange={handleImageChange} />
+                        </Button>
+                        {/* Image Preview - handles both local blob URL and backend URL */}
+                        {formData.image && (
+                            <Box sx={{ mt: 2, textAlign: 'center' }}>
+                                <img src={formData.image} alt="Course Preview" style={{ maxWidth: '100%', maxHeight: '150px', borderRadius: '4px', border: '1px solid #eee' }} />
+                            </Box>
+                        )}
+                    </Box>
+                </DialogContent>
+                <DialogActions sx={{ p: '16px 24px' }}>
+                    <Button onClick={handleClose} color="secondary">Cancel</Button>
+                    <Button onClick={handleSubmit} variant="contained" disabled={!formData.title}>
+                        {editingCourse ? 'Update Course' : 'Add Course'}
+                    </Button>
+                </DialogActions>
+            </Dialog>
 
             {/* Add Chapter Dialog (Simplified) */}
             <Dialog open={chapterDialogOpen} onClose={handleCloseChapterDialog} maxWidth="xs" fullWidth>
@@ -416,10 +420,10 @@ const CourseManagement = () => {
                 <DialogContent>
                     <TextField autoFocus margin="dense" label="Chapter Title" fullWidth variant="outlined" value={chapterFormData.title} onChange={(e) => setChapterFormData({ ...chapterFormData, title: e.target.value })} required />
                     <Box sx={{ mt: 2 }}>
-                         <Typography variant="subtitle2" sx={{ mb: 1 }}>Chapter PDF</Typography>
-                         {/* Input for single PDF file */}
+                        <Typography variant="subtitle2" sx={{ mb: 1 }}>Chapter PDF</Typography>
+                        {/* Input for single PDF file */}
                         <Button variant="outlined" component="label" startIcon={<UploadIcon />} sx={{ mb: chapterFormData.pdfFile ? 1 : 2 }} fullWidth>
-                             {chapterFormData.pdfFile ? `Change PDF (${chapterFormData.pdfFile.name})` : 'Select PDF File'}
+                            {chapterFormData.pdfFile ? `Change PDF (${chapterFormData.pdfFile.name})` : 'Select PDF File'}
                             <input type="file" hidden accept=".pdf" onChange={handleChapterPdfChange} />
                         </Button>
                         {/* Preview for the selected PDF file */}
@@ -431,7 +435,7 @@ const CourseManagement = () => {
                                     <Typography variant="caption" color="text.secondary">{formatFileSize(chapterFormData.pdfFile.size)}</Typography>
                                 </Box>
                                 <IconButton size="small" onClick={() => window.open(URL.createObjectURL(chapterFormData.pdfFile), '_blank')} aria-label="Preview selected PDF">
-                                    <PreviewIcon fontSize="small"/>
+                                    <PreviewIcon fontSize="small" />
                                 </IconButton>
                             </Box>
                         )}
@@ -446,7 +450,7 @@ const CourseManagement = () => {
                 </DialogActions>
             </Dialog>
 
-             {/* PDF Dialog for adding to existing chapter is REMOVED */}
+            {/* PDF Dialog for adding to existing chapter is REMOVED */}
 
         </Box>
     );
